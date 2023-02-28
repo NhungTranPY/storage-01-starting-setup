@@ -9,8 +9,8 @@ const user = {
 }
 
 storeBtn.addEventListener('click', () => {
-    sessionStorage.setItem('uid', userId)
-    localStorage.setItem('user', JSON.stringify(user))
+    sessionStorage.setItem('uid', userId)  // close page and re-open => data lost
+    localStorage.setItem('user', JSON.stringify(user)) // close page and re-open => data still there
 })
 
 retrBtn.addEventListener('click', () => {
