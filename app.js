@@ -1,23 +1,32 @@
 const storeBtn = document.getElementById('store-btn')
 const retrBtn = document.getElementById('retrieve-btn')
 
+const dbRequest = indexedDB.open('StorageDummy', 1)
+
+dbRequest.onupgradeneeded = function(event) {
+    const db = event.target.result
+
+    const objStore = db.createObjectStore('products', {keyPath: 'id'})
+
+    objStore.transaction.oncomplete = function(event) {
+        const productsStore = db.transaction('products', 'readonly').objectStore('products')
+        productsStore.add({
+            id: 'p1', 
+            title: 'A first product',
+            price: 12.99,
+            tags: ['Expensive', 'Luxury']
+        })
+    }
+}
+
+dbRequest.onerror = function(event) {
+    console.log('ERROR');
+}
+
 storeBtn.addEventListener('click', () => {
-    const userId = 'u123'
-    const user = {name: 'Max', age: 30}
-    document.cookie = `uid=${userId}`
-    document.cookie = `uid=${userId}; max-age=360` // to set it to last 360 seconds
-    // document.cookie = `uid=${userId}; expires=` // to set it to expired
-    document.cookie = `user=${JSON.stringify(user)}`
+    
 })
 
 retrBtn.addEventListener('click', () => {
-    // console.log(document.cookie.split(';'));
-    // console.log(document.cookie);
-    const cookieData = document.cookie.split(';');
-    const data = cookieData.map(i => {
-        return i.trim()
-    })
-    console.log(data);
-    console.log(data[1].split('=')); 
-    console.log(data[1].split('=')[1]); // user value
+    
 })
